@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_margin="@dimen/activity_vertical_margin_half"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin_half"
+        android:layout_marginBottom="@dimen/activity_vertical_margin_half"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/payment_instrument_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="PP"/>
+
+
+        <ImageView
+            android:id="@+id/move_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_vertical_margin_half"
+            android:layout_marginRight="@dimen/activity_vertical_margin_half"
+            android:layout_toLeftOf="@+id/move_down"
+            android:src="@drawable/arrow_up"/>
+
+        <ImageView
+            android:id="@id/move_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/activity_vertical_margin_half"
+            android:layout_marginRight="@dimen/activity_vertical_margin_half"
+            android:rotation="180"
+            android:src="@drawable/arrow_up"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/payment_instrument_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin_half"
+        android:text="aaaa"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/activity_vertical_margin_half"
+        android:weightSum="2">
+
+
+        <Button
+            android:id="@+id/remove_payment_instrument"
+            style="@style/second_level_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/activity_vertical_margin_half"
+            android:layout_weight="1"
+            android:text="@string/pi_remove"/>
+
+        <Button
+            android:id="@+id/disable_payment_instrument"
+            style="@style/second_level_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_vertical_margin_half"
+            android:layout_weight="1"
+            android:text="@string/pi_disable"/>
+
+    </LinearLayout>
+</LinearLayout>
