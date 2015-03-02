@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Demo PaylevenInAppSDK</string>
+    <string name="action_sign_out">Sign out</string>
+
+    <string name="using_email">Using email: %s</string>
+    <string name="email_hint">Email address</string>
+    <string name="login">Login</string>
+    <string name="error">Error</string>
+
+
+     <!--used in credit card activity -->
+    <string name="card_number_hint">Card number</string>
+    <string name="expires">Expires</string>
+    <string name="expiry_month_hint">MM</string>
+    <string name="expiry_year_hint">YYYY</string>
+    <string name="cvv_hint">CVV</string>
+    <string name="card_holder_hint">Card Holder</string>
+    <string name="add_cc">Add new credit card</string>
+    <string name="cc_added">Credit card added successfully</string>
+
+    <!--used in sepa card view-->
+    <string name="iban_hint">IBAN</string>
+    <string name="bic_hint">BIC</string>
+    <string name="add_sepa">Add new SEPA card</string>
+    <string name="get_pi">Get payment instruments</string>
+    <string name="sepa_added">SEPA payment instrument added successfully</string>
+
+
+    <!--used in debit card view-->
+    <string name="account_no_hint">Account number</string>
+    <string name="routing_no_hint">Routing number</string>
+    <string name="add_debit">Add new debit card</string>
+    <string name="dd_added">Debit card added successfully</string>
+
+    <string name="set_pi">Set payment instruments order</string>
+
+    <string name="use_case">Use case</string>
+    <string name="use_case_business">Business</string>
+    <string name="use_case_private">Private</string>
+    <string name="use_case_default">Default</string>
+
+    <!--used in paypal view-->
+    <string name="paypal_auth_token_hint">PayPal auth token</string>
+    <string name="add_paypal">Add PayPal account</string>
+    <string name="paypal_added">PayPal account added successfully</string>
+
+
+    <!--used in payment instruments view-->
+    <string name="no_pi">No payment instrument</string>
+    <string name="pi_disabling_failed">Payment instrument disabling failed with %s</string>
+    <string name="pi_removing_failed">Payment instrument removing failed with %s</string>
+    <string name="pi_order">Payment instruments order set successfully</string>
+    <string name="pi_order_failed">Payment instruments order set failed with %s</string>
+    <string name="pi_remove_from">Remove from %s</string>
+    <string name="pi_remove">Remove</string>
+    <string name="pi_disable">Disable</string>
+
+
+    <string name="processing">Processing</string>
+</resources>
