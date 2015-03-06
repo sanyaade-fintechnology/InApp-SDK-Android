@@ -137,9 +137,11 @@ public class PaymentInstrumentsListAdapter extends ArrayAdapter<PaymentInstrumen
     private String getDescriptionFromPaymentInstrument(final PaymentInstrument paymentInstrument) {
         switch (paymentInstrument.getPaymentInstrumentType()) {
             case CC:
-                final String descriptionCC = ((CreditCardPaymentInstrument) paymentInstrument)
-                        .getPan() + " "
-                        + ((CreditCardPaymentInstrument) paymentInstrument).getCardHolder();
+                final CreditCardPaymentInstrument creditCardPaymentInstrument =
+                        (CreditCardPaymentInstrument) paymentInstrument;
+                final String descriptionCC = creditCardPaymentInstrument.getPan() + " "
+                        + creditCardPaymentInstrument.getExpiryMonth()
+                        + "/" + creditCardPaymentInstrument.getExpiryYear();
                 return descriptionCC;
             case DD:
                 final String descriptionDD =

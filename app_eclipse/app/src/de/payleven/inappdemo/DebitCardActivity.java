@@ -98,6 +98,11 @@ public class DebitCardActivity extends ToplevelActivity {
 
     }
 
+    /**
+     * Request the {@link de.payleven.inappdemo.PaylevenWrapper} to add a payment instrument.
+     * Displays a progress dialog while the action is being done.
+     * Handles success and failure cases.
+     */
     private void addPaymentInstrument() {
         showProgressDialog();
         final DebitCardPaymentInstrument paymentInstrument = getPaymentInstrument();

@@ -4,7 +4,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
 /**
- * Created by android on 12/15/14.
+ * Top Level activity that allows displaying and dismissing a progress dialog
  */
 public class ToplevelActivity extends FragmentActivity {
 

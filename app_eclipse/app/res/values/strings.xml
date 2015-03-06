@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Demo PaylevenInAppSDK</string>
+    <string name="app_name">InApp Sample</string>
     <string name="action_sign_out">Sign out</string>
 
     <string name="using_email">Using email: %s</string>
@@ -11,39 +11,39 @@
 
 
      <!--used in credit card activity -->
-    <string name="card_number_hint">Card number</string>
+    <string name="card_number_hint">Card Number</string>
     <string name="expires">Expires</string>
     <string name="expiry_month_hint">MM</string>
     <string name="expiry_year_hint">YYYY</string>
     <string name="cvv_hint">CVV</string>
     <string name="card_holder_hint">Card Holder</string>
-    <string name="add_cc">Add new credit card</string>
-    <string name="cc_added">Credit card added successfully</string>
+    <string name="add_cc">Add new Credit Card</string>
+    <string name="cc_added">Credit Card added successfully</string>
 
     <!--used in sepa card view-->
     <string name="iban_hint">IBAN</string>
     <string name="bic_hint">BIC</string>
-    <string name="add_sepa">Add new SEPA card</string>
-    <string name="get_pi">Get payment instruments</string>
+    <string name="add_sepa">Add new SEPA Account</string>
+    <string name="get_pi">Show Payment Instruments</string>
     <string name="sepa_added">SEPA payment instrument added successfully</string>
 
 
     <!--used in debit card view-->
-    <string name="account_no_hint">Account number</string>
-    <string name="routing_no_hint">Routing number</string>
-    <string name="add_debit">Add new debit card</string>
+    <string name="account_no_hint">Account Number</string>
+    <string name="routing_no_hint">Routing Number</string>
+    <string name="add_debit">Add new Debit Card</string>
     <string name="dd_added">Debit card added successfully</string>
 
-    <string name="set_pi">Set payment instruments order</string>
+    <string name="set_pi">Set Payment Instruments Order</string>
 
-    <string name="use_case">Use case</string>
+    <string name="use_case">Use Case</string>
     <string name="use_case_business">Business</string>
     <string name="use_case_private">Private</string>
     <string name="use_case_default">Default</string>
 
     <!--used in paypal view-->
-    <string name="paypal_auth_token_hint">PayPal auth token</string>
-    <string name="add_paypal">Add PayPal account</string>
+    <string name="paypal_auth_token_hint">PayPal Auth Token</string>
+    <string name="add_paypal">Add PayPal Account</string>
     <string name="paypal_added">PayPal account added successfully</string>
 
 

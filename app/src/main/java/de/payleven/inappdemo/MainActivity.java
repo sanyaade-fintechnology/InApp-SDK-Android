@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-
+/**
+ * Main Activity of the sample app.
+ */
 public class MainActivity extends ActionBarActivity {
 
     public static final String EXTRA_EMAIL = "email";

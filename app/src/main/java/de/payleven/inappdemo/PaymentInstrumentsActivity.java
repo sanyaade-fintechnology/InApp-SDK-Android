@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.payleven.inappsdk.PaymentInstrument;
+import de.payleven.inappsdk.errors.CallbackError;
 import de.payleven.inappsdk.listeners.DisablePaymentInstrumentListener;
 import de.payleven.inappsdk.listeners.GetPaymentInstrumentsListener;
 import de.payleven.inappsdk.listeners.RemovePaymentInstrumentFromUseCaseListener;
@@ -89,7 +90,14 @@ public class PaymentInstrumentsActivity extends FragmentActivity implements
                 if (listAdapter != null) {
                     listAdapter.notifyDataSetChanged();
                 }
-                emptyListTextView.setText(throwable.getMessage());
+                String errorText;
+                if(throwable instanceof CallbackError){
+                    errorText = ((CallbackError)throwable).getErrorCode() 
+                            + " " + throwable.getMessage();
+                }else{
+                    errorText = throwable.getMessage();
+                }
+                emptyListTextView.setText(errorText);
             }
         });
     }

@@ -6,12 +6,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import de.payleven.inappsdk.PaylevenApi;
-import de.payleven.inappsdk.PaylevenApiFactory;
-import de.payleven.inappsdk.listeners.RegistrationListener;
+import de.payleven.inappsdk.PaylevenFactory;
+import de.payleven.inappsdk.PaylevenInAppClient;
 
 /**
- * Fakes a login activity in an integrator app and registers with payleven
+ * This activity simulates a login activity in an usual integrator app.
+ * When the user presses "Login", the registration with the 
+ * {@link de.payleven.inappsdk.PaylevenInAppClient} is triggered.
  */
 public class LoginActivity extends ToplevelActivity {
     @Override
@@ -24,34 +25,24 @@ public class LoginActivity extends ToplevelActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        showProgressDialog();
-                        initPaylevenApi();
+                        registerWithPaylevenClient();
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.putExtra(MainActivity.EXTRA_EMAIL, getEmail());
+                        startActivity(intent);
                     }
                 });
 
     }
 
-    private void initPaylevenApi() {
-        PaylevenApiFactory.registerWithAPIKey(
-                this, PaylevenWrapper.API_KEY, new RegistrationListener() {
-                    @Override
-                    public void onRegistrationSuccessful(PaylevenApi paylevenApi) {
-                        PaylevenWrapper.getInstance().initPaylevenWrapper(
-                                LoginActivity.this, paylevenApi);
-                        dismissProgressDialog();
-
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra(MainActivity.EXTRA_EMAIL, getEmail());
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onRegistrationFailed(Throwable throwable) {
-                        dismissProgressDialog();
-                        showErrorAlertDialog(getString(R.string.error), throwable.getMessage());
-                    }
-                });
-
+    /**
+     * Register with {@link de.payleven.inappsdk.PaylevenInAppClient} and initialize the 
+     * {@link de.payleven.inappdemo.PaylevenWrapper}
+     */
+    private void registerWithPaylevenClient() {
+        PaylevenInAppClient paylevenInAppClient = PaylevenFactory.registerWithAPIKey(
+                this, PaylevenWrapper.API_KEY);
+        PaylevenWrapper.getInstance().initPaylevenWrapper(
+                LoginActivity.this, paylevenInAppClient);
     }
 
     private String getEmail() {
@@ -59,8 +50,4 @@ public class LoginActivity extends ToplevelActivity {
         return emailEditText.getText().toString();
     }
 
-    /*package*/ void showErrorAlertDialog(final String title, final String message) {
-        final SimpleDialogFragment errorFragment = SimpleDialogFragment.newInstance(title, message);
-        errorFragment.show(getSupportFragmentManager(), SimpleDialogFragment.TAG);
-    }
 }

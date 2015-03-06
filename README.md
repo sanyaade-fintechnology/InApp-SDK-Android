@@ -1,10 +1,15 @@
-# payleven InApp SDK 1.0.0
+[![Platform](https://img.shields.io/badge/Platform-Android-brightgreen.svg?style=flat-square)]()
+[![Version](https://img.shields.io/badge/version-1.0.0-brightgreen.svg?style=flat-square)]()
+[![API](https://img.shields.io/badge/API-14%2B-orange.svg?style=flat-square)]()
+[![Berlin](https://img.shields.io/badge/Made%20in-Berlin-red.svg?style=flat-square)]()
+
+# payleven InApp SDK
 
 This project provides an Android API that allows creating of user tokens and payment instruments, retrieving and sorting payment instruments, based on the user token. Learn more about the InApp API on the  [payleven website](https://payleven.com/).
 
 ### Prerequisites
 1. Register with [payleven](http://payleven.com) in order to get personal merchant credentials.
-2. Get API key on payleven [developer portal](https://payleven.de/developers/).
+2. In order to receive an API key, please contact us by sending an email to developer@payleven.com
 
 ### Installation
 ##### Repository
@@ -95,18 +100,7 @@ Use the API key received on payleven developers portal to authenticate your app 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      PaylevenApiFactory.registerWithAPIKey(
-                this, PaylevenWrapper.API_KEY, new RegistrationListener() {
-                    @Override
-                    public void onRegistrationSuccessful(PaylevenApi paylevenApi) {
-                       // use the PaylevenApi for different requests
-                    }
-
-                    @Override
-                    public void onRegistrationFailed(Throwable throwable) {
-                       // handle registration failed
-                    }
-                });
+      mPaylevenApi = PaylevenFactory.registerWithAPIKey(this, API_KEY);
       ...
    }
  }
@@ -222,4 +216,4 @@ public void removePaymentInstrumentFromUseCase(
     }
  ```
 #### Documentation
-[API Reference](https://github.com/payleven/inapp-android/javadoc)
+[API Reference](http://payleven.github.io/InApp-SDK-Android/javadoc/)

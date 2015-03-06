@@ -19,7 +19,8 @@ import de.payleven.inappsdk.errors.causes.InvalidPayPalAuthToken;
 import de.payleven.inappsdk.listeners.AddPaymentInstrumentListener;
 
 /**
- * View used for entering PayPal payment instrument details
+ * Activity used for entering PayPal payment instrument details and requesting adding of the 
+ * payment instrument  
  */
 public class PayPalActivity extends FragmentActivity {
 
@@ -94,6 +95,11 @@ public class PayPalActivity extends FragmentActivity {
         }
     }
 
+    /**
+     * Request the {@link de.payleven.inappdemo.PaylevenWrapper} to add a payment instrument.
+     * Displays a progress dialog while the action is being done. 
+     * Handles success and failure cases.
+     */
     private void addPaymentInstrument() {
         showProgressDialog();
         final PayPalPaymentInstrument paymentInstrument = getPaymentInstrument();
@@ -114,6 +120,7 @@ public class PayPalActivity extends FragmentActivity {
                     @Override
                     public void onPaymentInstrumentAddFailed(Throwable throwable) {
                         dismissProgressDialog();
+                        // display the reason why this failed.
                         if (throwable instanceof CallbackError) {
                             if (throwable instanceof ValidationError) {
                                 String error = Util.getErrorFormatted((ValidationError) throwable);

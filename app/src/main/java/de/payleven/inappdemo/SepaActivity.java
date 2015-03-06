@@ -17,7 +17,7 @@ import de.payleven.inappsdk.errors.causes.InvalidIBAN;
 import de.payleven.inappsdk.listeners.AddPaymentInstrumentListener;
 
 /**
- * View used for entering Sepa card details
+ * View used for entering Sepa account details
  */
 public class SepaActivity extends ToplevelActivity {
 
@@ -97,7 +97,11 @@ public class SepaActivity extends ToplevelActivity {
         return new SepaPaymentInstrument(iban, bic);
     }
 
-
+    /**
+     * Request the {@link de.payleven.inappdemo.PaylevenWrapper} to add a payment instrument.
+     * Displays a progress dialog while the action is being done.
+     * Handles success and failure cases.
+     */
     private void addPaymentInstrument() {
         showProgressDialog();
         final SepaPaymentInstrument paymentInstrument = getPaymentInstrument();

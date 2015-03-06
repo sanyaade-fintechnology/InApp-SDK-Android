@@ -105,9 +105,15 @@ public class CreditCardActivity extends ToplevelActivity {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (!hasFocus) {
-                            final String expirationMonth = expirationMonthEditText.getText()
-                                    .toString();
-
+                            
+                            // if the edit text doesn't contain a number, just consider this as 
+                            // null value
+                            Integer expirationMonth = null;
+                            try {
+                                expirationMonth = Integer
+                                        .parseInt(expirationMonthEditText.getText().toString());
+                            } catch (NumberFormatException e) {
+                            }
                             if (!CreditCardPaymentInstrument.validateExpiryMonth(expirationMonth)
                                     .isValid()) {
                                 ErrorCause errorCause = CreditCardPaymentInstrument
@@ -123,10 +129,17 @@ public class CreditCardActivity extends ToplevelActivity {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (!hasFocus) {
-                            final String expirationYear = expirationYearEditText.getText()
-                                    .toString();
 
-                            CreditCardPaymentInstrument paymentInstrument = getPaymentInstrument();
+                            // if the edit text doesn't contain a number, just consider this as 
+                            // null value
+                            Integer expirationYear = null;
+                            try {
+                                expirationYear = Integer
+                                        .parseInt(expirationYearEditText.getText().toString());
+                            } catch (NumberFormatException e) {
+
+                            }
+
                             if (!CreditCardPaymentInstrument.validateExpiryYear(expirationYear)
                                     .isValid()) {
                                 ErrorCause errorCause = CreditCardPaymentInstrument
@@ -157,20 +170,28 @@ public class CreditCardActivity extends ToplevelActivity {
     private CreditCardPaymentInstrument getPaymentInstrument() {
         final String cardNumber = cardNumberEditText.getText().toString();
         final String cardHolder = cardHolderEditText.getText().toString();
-        final String expirationMonth = expirationMonthEditText.getText().toString();
-        final String expirationYear = expirationYearEditText.getText().toString();
+        final Integer expirationMonth = Integer.parseInt(
+                expirationMonthEditText.getText().toString());
+        final Integer expirationYear = Integer.parseInt(
+                expirationYearEditText.getText().toString());
         final String cvv = cvvEditText.getText().toString();
 
         return new CreditCardPaymentInstrument(
                 cardNumber, cardHolder, expirationMonth, expirationYear, cvv);
     }
 
+    /**
+     * Request the {@link de.payleven.inappdemo.PaylevenWrapper} to add a payment instrument.
+     * Displays a progress dialog while the action is being done.
+     * Handles success and failure cases.
+     */
     private void addPaymentInstrument() {
+        showProgressDialog();
+
         final CreditCardPaymentInstrument paymentInstrument = getPaymentInstrument();
         final String useCase = useCaseSelectionView.getText().toString();
 
-        showProgressDialog();
-
+       
         paylevenWrapper.addPaymentInstrument(
                 paymentInstrument, useCase, new AddPaymentInstrumentListener() {
                     @Override

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 /**
- * Dialog fragment that displays an indefinite progress dialog with the text "Processing"
+ * Dialog fragment that displays a simple indefinite progress dialog with the text "Processing"
  */
 public class ProgressDialogFragment extends DialogFragment {
     @Override
