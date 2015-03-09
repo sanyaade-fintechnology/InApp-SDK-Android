@@ -105,7 +105,7 @@ public class CreditCardActivity extends ToplevelActivity {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (!hasFocus) {
-                            
+
                             // if the edit text doesn't contain a number, just consider this as 
                             // null value
                             Integer expirationMonth = null;
@@ -170,10 +170,24 @@ public class CreditCardActivity extends ToplevelActivity {
     private CreditCardPaymentInstrument getPaymentInstrument() {
         final String cardNumber = cardNumberEditText.getText().toString();
         final String cardHolder = cardHolderEditText.getText().toString();
-        final Integer expirationMonth = Integer.parseInt(
-                expirationMonthEditText.getText().toString());
-        final Integer expirationYear = Integer.parseInt(
-                expirationYearEditText.getText().toString());
+
+        Integer expirationMonth = null;
+
+        try {
+            expirationMonth = Integer.parseInt(
+                    expirationMonthEditText.getText().toString());
+        } catch (NumberFormatException e) {
+
+        }
+        Integer expirationYear = null;
+        try {
+            expirationYear = Integer.parseInt(
+                    expirationYearEditText.getText().toString());
+        } catch (NumberFormatException e) {
+
+        }
+
+
         final String cvv = cvvEditText.getText().toString();
 
         return new CreditCardPaymentInstrument(
@@ -191,7 +205,7 @@ public class CreditCardActivity extends ToplevelActivity {
         final CreditCardPaymentInstrument paymentInstrument = getPaymentInstrument();
         final String useCase = useCaseSelectionView.getText().toString();
 
-       
+
         paylevenWrapper.addPaymentInstrument(
                 paymentInstrument, useCase, new AddPaymentInstrumentListener() {
                     @Override
