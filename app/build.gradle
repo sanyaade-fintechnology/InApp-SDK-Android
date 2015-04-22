@@ -30,5 +30,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:20.0.0'
     compile 'com.google.code.gson:gson:2.3'
     //Use the specific library version here
-    compile 'de.payleven.inappsdk:inapp:+@jar'
+    compile 'de.payleven:inapp:+@jar'
 }

@@ -4,11 +4,13 @@
     <string name="app_name">InApp Sample</string>
     <string name="action_sign_out">Sign out</string>
 
+    <!--used in login activity-->
     <string name="using_email">Using email: %s</string>
     <string name="email_hint">Email address</string>
     <string name="login">Login</string>
     <string name="error">Error</string>
-
+    <string name="missing_email">Missing email</string>
+    <string name="invalid_email">Invalid email format</string>
 
      <!--used in credit card activity -->
     <string name="card_number_hint">Card Number</string>
