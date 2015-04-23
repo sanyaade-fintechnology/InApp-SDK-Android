@@ -20,7 +20,7 @@ android {
         versionName "1.0"
 
         // replace this with the API key received when registered as integrator
-        buildConfigField "String", "PAYLEVEN_API_KEY", "\"fc60bb66a02a48efa178c7f9b4dc6cb9\""
+        buildConfigField "String", "PAYLEVEN_API_KEY", "\"6ddfd523c7a849d2968e60754fd74e13\""
     }
 
 }
