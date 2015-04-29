@@ -108,12 +108,8 @@ public class CreditCardActivity extends ToplevelActivity {
 
                             // if the edit text doesn't contain a number, just consider this as 
                             // null value
-                            Integer expirationMonth = null;
-                            try {
-                                expirationMonth = Integer
-                                        .parseInt(expirationMonthEditText.getText().toString());
-                            } catch (NumberFormatException e) {
-                            }
+                            String expirationMonth = expirationMonthEditText.getText().toString();
+
                             if (!CreditCardPaymentInstrument.validateExpiryMonth(expirationMonth)
                                     .isValid()) {
                                 ErrorCause errorCause = CreditCardPaymentInstrument
@@ -132,13 +128,7 @@ public class CreditCardActivity extends ToplevelActivity {
 
                             // if the edit text doesn't contain a number, just consider this as 
                             // null value
-                            Integer expirationYear = null;
-                            try {
-                                expirationYear = Integer
-                                        .parseInt(expirationYearEditText.getText().toString());
-                            } catch (NumberFormatException e) {
-
-                            }
+                            String expirationYear = expirationYearEditText.getText().toString();
 
                             if (!CreditCardPaymentInstrument.validateExpiryYear(expirationYear)
                                     .isValid()) {
@@ -171,22 +161,8 @@ public class CreditCardActivity extends ToplevelActivity {
         final String cardNumber = cardNumberEditText.getText().toString();
         final String cardHolder = cardHolderEditText.getText().toString();
 
-        Integer expirationMonth = null;
-
-        try {
-            expirationMonth = Integer.parseInt(
-                    expirationMonthEditText.getText().toString());
-        } catch (NumberFormatException e) {
-
-        }
-        Integer expirationYear = null;
-        try {
-            expirationYear = Integer.parseInt(
-                    expirationYearEditText.getText().toString());
-        } catch (NumberFormatException e) {
-
-        }
-
+        String expirationMonth = expirationMonthEditText.getText().toString();
+        String expirationYear = expirationYearEditText.getText().toString();
 
         final String cvv = cvvEditText.getText().toString();
 
