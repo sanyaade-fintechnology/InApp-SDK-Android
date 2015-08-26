@@ -32,7 +32,6 @@ public class CreditCardActivity extends ToplevelActivity {
     private EditText expirationYearEditText;
     private EditText cvvEditText;
     private TextView errorTextView;
-    private EditText useCaseSelectionView;
 
     private PaylevenWrapper paylevenWrapper;
 
@@ -52,7 +51,6 @@ public class CreditCardActivity extends ToplevelActivity {
         expirationYearEditText = (EditText) findViewById(R.id.expiration_year_edittext);
         cvvEditText = (EditText) findViewById(R.id.cvv_edittext);
         errorTextView = (TextView) findViewById(R.id.error_textview);
-        useCaseSelectionView = (EditText) findViewById(R.id.use_case_view);
 
         setFocusListeners();
 
@@ -179,11 +177,9 @@ public class CreditCardActivity extends ToplevelActivity {
         showProgressDialog();
 
         final CreditCardPaymentInstrument paymentInstrument = getPaymentInstrument();
-        final String useCase = useCaseSelectionView.getText().toString();
-
 
         paylevenWrapper.addPaymentInstrument(
-                paymentInstrument, useCase, new AddPaymentInstrumentListener() {
+                paymentInstrument, new AddPaymentInstrumentListener() {
                     @Override
                     public void onPaymentInstrumentAddedSuccessfully(String userToken) {
                         dismissProgressDialog();

@@ -9,8 +9,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin_half"
         android:layout_marginBottom="@dimen/activity_vertical_margin_half"
+        android:layout_marginTop="@dimen/activity_vertical_margin_half"
         android:orientation="horizontal">
 
         <TextView
@@ -48,31 +48,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin_half"/>
 
-    <LinearLayout
+
+    <Button
+        android:id="@+id/disable_payment_instrument"
+        style="@style/second_level_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginBottom="@dimen/activity_vertical_margin_half"
-        android:weightSum="2">
+        android:text="@string/pi_disable"/>
 
-
-        <Button
-            android:id="@+id/remove_payment_instrument"
-            style="@style/second_level_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/activity_vertical_margin_half"
-            android:layout_weight="1"
-            android:text="@string/pi_remove"/>
-
-        <Button
-            android:id="@+id/disable_payment_instrument"
-            style="@style/second_level_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_vertical_margin_half"
-            android:layout_weight="1"
-            android:text="@string/pi_disable"/>
-
-    </LinearLayout>
 </LinearLayout>

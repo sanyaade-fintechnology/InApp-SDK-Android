@@ -80,12 +80,10 @@ public class PaylevenWrapper {
      * Adds the payment instrument to the current user token, in the use case selected
      *
      * @param paymentInstrument the payment instrument that will be added to the user token
-     * @param useCase           the use case to which the payment instrument belongs
      * @param listener          listener that reacts on the response of the Payleven InApp Client for adding
      *                          a payment instrument
      */
     public void addPaymentInstrument(final PaymentInstrument paymentInstrument,
-                                     @Nullable final String useCase,
                                      AddPaymentInstrumentListener listener) {
 
         String userToken = getUserToken();
@@ -93,10 +91,9 @@ public class PaylevenWrapper {
             mPaylevenInAppClient.createUserTokenWithPaymentInstrument(
                     email,
                     paymentInstrument,
-                    useCase,
                     listener);
         } else {
-            mPaylevenInAppClient.addPaymentInstrument(userToken, paymentInstrument, useCase, listener);
+            mPaylevenInAppClient.addPaymentInstrument(userToken, paymentInstrument, listener);
         }
     }
 
@@ -110,20 +107,16 @@ public class PaylevenWrapper {
      * instruments for the current user, for a specific use case. The result of the request is
      * handled by the listener implementation
      *
-     * @param useCase  the use case for which we want to retrieve payment instruments
      * @param listener listener that handles the result of the request
      */
-    public void getPaymentInstruments(final String useCase,
-                                      GetPaymentInstrumentsListener listener) {
-        mPaylevenInAppClient.getPaymentInstrumentsList(getUserToken(), useCase, listener);
+    public void getPaymentInstruments(GetPaymentInstrumentsListener listener) {
+        mPaylevenInAppClient.getPaymentInstrumentsList(getUserToken(), listener);
     }
 
-    public void setPaymentInstrumentsOrder(final String useCase,
-                                           final List<PaymentInstrument> paymentInstruments,
+    public void setPaymentInstrumentsOrder(final List<PaymentInstrument> paymentInstruments,
                                            SetPaymentInstrumentsOrderListener listener) {
         mPaylevenInAppClient.setPaymentInstrumentsOrder(
                 getUserToken(),
-                useCase,
                 paymentInstruments,
                 listener);
     }
@@ -141,24 +134,4 @@ public class PaylevenWrapper {
         mPaylevenInAppClient.disablePaymentInstrument(getUserToken(), paymentInstrument, listener);
     }
 
-    /**
-     * Request the {@link de.payleven.inappsdk.PaylevenInAppClient} to remove a payment instrument
-     * that is associated to the current user token and to a use case
-     * The result of this request is notified by the listener
-     *
-     * @param paymentInstrument payment instrument to be disabled
-     * @param useCase           the use case for which we want to remove the payment instrument
-     * @param listener          listener that notifies about the result of the operation
-     */
-    public void removePaymentInstrumentFromUseCase(
-            final PaymentInstrument paymentInstrument,
-            final String useCase,
-            final RemovePaymentInstrumentFromUseCaseListener listener) {
-
-        mPaylevenInAppClient.removePaymentInstrumentFromUseCase(
-                getUserToken(),
-                paymentInstrument,
-                useCase,
-                listener);
-    }
 }

@@ -26,12 +26,10 @@ import de.payleven.inappsdk.listeners.SetPaymentInstrumentsOrderListener;
  */
 public class PaymentInstrumentsActivity extends FragmentActivity implements
         PaymentInstrumentsListAdapter.DisablePaymentInstrumentButtonListener,
-        PaymentInstrumentsListAdapter.RemovePaymentInstrumentButtonListener,
         PaymentInstrumentsListAdapter.SwitchPaymentInstrumentPositionsListener {
 
     private ListView paymentInstrumentsListView;
     private TextView emptyListTextView;
-    private EditText useCaseSelectionView;
     private ProgressDialogFragment progressDialogFragment;
 
     private PaymentInstrumentsListAdapter listAdapter;
@@ -50,7 +48,6 @@ public class PaymentInstrumentsActivity extends FragmentActivity implements
     }
 
     private void initUI() {
-        useCaseSelectionView = (EditText) findViewById(R.id.use_case_filter);
         paymentInstrumentsListView = (ListView) findViewById(R.id.payment_instruments);
         emptyListTextView = (TextView) findViewById(R.id.empty);
         paymentInstrumentsListView.setEmptyView(emptyListTextView);
@@ -73,14 +70,13 @@ public class PaymentInstrumentsActivity extends FragmentActivity implements
 
     private void getPaymentInstruments() {
         showProgressDialog();
-        final String useCase = useCaseSelectionView.getText().toString();
 
-        paylevenAPI.getPaymentInstruments(useCase, new GetPaymentInstrumentsListener() {
+        paylevenAPI.getPaymentInstruments(new GetPaymentInstrumentsListener() {
             @Override
             public void onPaymentInstrumentsRetrieved(List<PaymentInstrument> paymentInstruments) {
                 dismissProgressDialog();
                 PaymentInstrumentsActivity.this.paymentInstruments = paymentInstruments;
-                updateListView(useCase);
+                updateListView();
             }
 
             @Override
@@ -102,12 +98,10 @@ public class PaymentInstrumentsActivity extends FragmentActivity implements
         });
     }
 
-    private void updateListView(String useCase) {
+    private void updateListView() {
         listAdapter = new PaymentInstrumentsListAdapter(
                 PaymentInstrumentsActivity.this,
                 paymentInstruments,
-                useCase,
-                PaymentInstrumentsActivity.this,
                 PaymentInstrumentsActivity.this,
                 PaymentInstrumentsActivity.this);
         paymentInstrumentsListView.setAdapter(listAdapter);
@@ -138,7 +132,6 @@ public class PaymentInstrumentsActivity extends FragmentActivity implements
         showProgressDialog();
 
         paylevenAPI.setPaymentInstrumentsOrder(
-                listAdapter.getUseCase(),
                 listAdapter.getObjects(),
                 new SetPaymentInstrumentsOrderListener() {
                     @Override
@@ -181,34 +174,6 @@ public class PaymentInstrumentsActivity extends FragmentActivity implements
                         dismissProgressDialog();
                         Toast.makeText(PaymentInstrumentsActivity.this,
                                 getString(R.string.pi_disabling_failed,
-                                        throwable.getMessage()),
-                                Toast.LENGTH_LONG).show();
-                    }
-                });
-    }
-
-    @Override
-    public void removePaymentInstrument(final PaymentInstrument paymentInstrument,
-                                        final String useCase) {
-        showProgressDialog();
-
-        paylevenAPI.removePaymentInstrumentFromUseCase(
-                paymentInstrument,
-                useCase,
-                new RemovePaymentInstrumentFromUseCaseListener() {
-                    @Override
-                    public void onPaymentInstrumentRemovedSuccessfully() {
-                        dismissProgressDialog();
-                        // request again the list of payment instruments to make sure that the
-                        // payment instrument was disabled
-                        getPaymentInstruments();
-                    }
-
-                    @Override
-                    public void onPaymentInstrumentRemoveFailed(Throwable throwable) {
-                        dismissProgressDialog();
-                        Toast.makeText(PaymentInstrumentsActivity.this,
-                                getString(R.string.pi_removing_failed,
                                         throwable.getMessage()),
                                 Toast.LENGTH_LONG).show();
                     }

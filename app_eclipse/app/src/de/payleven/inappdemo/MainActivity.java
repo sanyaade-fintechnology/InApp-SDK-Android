@@ -52,33 +52,6 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        Button addDebitCardPIButton = (Button) findViewById(R.id.add_debit_button);
-        addDebitCardPIButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DebitCardActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button addSepaPIButton = (Button) findViewById(R.id.add_sepa_button);
-        addSepaPIButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SepaActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        Button addPayPalPIButton = (Button) findViewById(R.id.add_paypal_button);
-        addPayPalPIButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, PayPalActivity.class);
-                startActivity(intent);
-            }
-        });
-
         Button getPIListButton = (Button) findViewById(R.id.get_PI_button);
         getPIListButton.setOnClickListener(new View.OnClickListener() {
             @Override

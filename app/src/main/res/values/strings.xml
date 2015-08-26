@@ -22,31 +22,13 @@
     <string name="add_cc">Add new Credit Card</string>
     <string name="cc_added">Credit Card added successfully</string>
 
-    <!--used in sepa card view-->
-    <string name="iban_hint">IBAN</string>
-    <string name="bic_hint">BIC</string>
-    <string name="add_sepa">Add new SEPA Account</string>
-    <string name="get_pi">Show Payment Instruments</string>
-    <string name="sepa_added">SEPA payment instrument added successfully</string>
-
-
-    <!--used in debit card view-->
-    <string name="account_no_hint">Account Number</string>
-    <string name="routing_no_hint">Routing Number</string>
-    <string name="add_debit">Add new Debit Card</string>
-    <string name="dd_added">Debit card added successfully</string>
-
     <string name="set_pi">Set Payment Instruments Order</string>
+    <string name="get_pi">Show Payment Instruments</string>
 
     <string name="use_case">Use Case</string>
     <string name="use_case_business">Business</string>
     <string name="use_case_private">Private</string>
     <string name="use_case_default">Default</string>
-
-    <!--used in paypal view-->
-    <string name="paypal_auth_token_hint">PayPal Auth Token</string>
-    <string name="add_paypal">Add PayPal Account</string>
-    <string name="paypal_added">PayPal account added successfully</string>
 
 
     <!--used in payment instruments view-->

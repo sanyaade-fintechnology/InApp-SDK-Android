@@ -12,10 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.payleven.inappsdk.CreditCardPaymentInstrument;
-import de.payleven.inappsdk.DebitCardPaymentInstrument;
-import de.payleven.inappsdk.PayPalPaymentInstrument;
 import de.payleven.inappsdk.PaymentInstrument;
-import de.payleven.inappsdk.SepaPaymentInstrument;
 
 /**
  * Adapter for the list of payment instruments
@@ -26,11 +23,6 @@ public class PaymentInstrumentsListAdapter extends ArrayAdapter<PaymentInstrumen
         void disablePaymentInstrument(final PaymentInstrument paymentInstrument);
     }
 
-    public interface RemovePaymentInstrumentButtonListener {
-        void removePaymentInstrument(final PaymentInstrument paymentInstrument,
-                                     final String useCase);
-    }
-
     public interface SwitchPaymentInstrumentPositionsListener {
         void switchPositions(final int to, final int from);
     }
@@ -39,27 +31,20 @@ public class PaymentInstrumentsListAdapter extends ArrayAdapter<PaymentInstrumen
     private Context context;
 
     private DisablePaymentInstrumentButtonListener disablePaymentInstrumentListener;
-    private RemovePaymentInstrumentButtonListener removeListener;
     private SwitchPaymentInstrumentPositionsListener positionListener;
 
-    // the use case of the items
-    private final String useCase;
     private List<PaymentInstrument> objects;
 
     public PaymentInstrumentsListAdapter(
             Context context,
             List<PaymentInstrument> objects,
-            final String useCase,
             DisablePaymentInstrumentButtonListener disablePaymentInstrumentListener,
-            RemovePaymentInstrumentButtonListener removeListener,
             SwitchPaymentInstrumentPositionsListener positionListener) {
 
         super(context, R.layout.payment_instrument_item, objects);
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.context = context;
-        this.useCase = useCase;
         this.disablePaymentInstrumentListener = disablePaymentInstrumentListener;
-        this.removeListener = removeListener;
         this.positionListener = positionListener;
         this.objects = objects;
     }
@@ -87,22 +72,6 @@ public class PaymentInstrumentsListAdapter extends ArrayAdapter<PaymentInstrumen
                 disablePaymentInstrumentListener.disablePaymentInstrument(paymentInstrument);
             }
         });
-
-
-        String removeFromUseCaseText;
-        if (useCase != null && !useCase.isEmpty()) {
-            removeFromUseCaseText = context.getString(R.string.pi_remove_from, useCase);
-        } else {
-            removeFromUseCaseText = context.getString(R.string.pi_remove);
-        }
-        holder.removePaymentInstrument.setText(removeFromUseCaseText);
-        holder.removePaymentInstrument.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeListener.removePaymentInstrument(paymentInstrument, useCase);
-            }
-        });
-
 
         int moveUpVisiblity = position == 0 ? View.INVISIBLE : View.VISIBLE;
         holder.moveUp.setVisibility(moveUpVisiblity);
@@ -139,22 +108,10 @@ public class PaymentInstrumentsListAdapter extends ArrayAdapter<PaymentInstrumen
             case CC:
                 final CreditCardPaymentInstrument creditCardPaymentInstrument =
                         (CreditCardPaymentInstrument) paymentInstrument;
-                final String descriptionCC = creditCardPaymentInstrument.getPan() + " "
+                final String descriptionCC = creditCardPaymentInstrument.getPanMasked() + " "
                         + creditCardPaymentInstrument.getExpiryMonth()
                         + "/" + creditCardPaymentInstrument.getExpiryYear();
                 return descriptionCC;
-            case DD:
-                final String descriptionDD =
-                        ((DebitCardPaymentInstrument) paymentInstrument).getAccountNumber() + " "
-                                + ((DebitCardPaymentInstrument) paymentInstrument).
-                                getRoutingNumber();
-                return descriptionDD;
-            case SEPA:
-                final String descriptionSEPA = ((SepaPaymentInstrument) paymentInstrument).getIban()
-                        + " " + ((SepaPaymentInstrument) paymentInstrument).getBic();
-                return descriptionSEPA;
-            case PAYPAL:
-                return ((PayPalPaymentInstrument) paymentInstrument).getAuthToken();
             default:
                 return null;
         }
@@ -164,7 +121,6 @@ public class PaymentInstrumentsListAdapter extends ArrayAdapter<PaymentInstrumen
         TextView paymentInstrumentType;
         TextView paymentInstrumentDetails;
         Button disablePaymentInstrument;
-        Button removePaymentInstrument;
         ImageView moveUp;
         ImageView moveDown;
 
@@ -174,15 +130,9 @@ public class PaymentInstrumentsListAdapter extends ArrayAdapter<PaymentInstrumen
             paymentInstrumentType = (TextView) itemView.findViewById(R.id.payment_instrument_type);
             disablePaymentInstrument = (Button) itemView.findViewById(
                     R.id.disable_payment_instrument);
-            removePaymentInstrument = (Button) itemView.findViewById(
-                    R.id.remove_payment_instrument);
             moveUp = (ImageView) itemView.findViewById(R.id.move_up);
             moveDown = (ImageView) itemView.findViewById(R.id.move_down);
         }
-    }
-
-    public String getUseCase() {
-        return useCase;
     }
 
     public List<PaymentInstrument> getObjects() {
