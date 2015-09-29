@@ -26,6 +26,7 @@ import de.payleven.inappsdk.listeners.AddPaymentInstrumentListener;
  */
 public class CreditCardActivity extends ToplevelActivity {
 
+    private EditText useCaseEditText;
     private EditText cardNumberEditText;
     private EditText cardHolderEditText;
     private EditText expirationMonthEditText;
@@ -45,6 +46,7 @@ public class CreditCardActivity extends ToplevelActivity {
     }
 
     private void init() {
+        useCaseEditText = (EditText) findViewById(R.id.use_case_edittext);
         cardNumberEditText = (EditText) findViewById(R.id.card_number_edittext);
         cardHolderEditText = (EditText) findViewById(R.id.card_holder_edittext);
         expirationMonthEditText = (EditText) findViewById(R.id.expiration_month_edittext);
@@ -93,6 +95,8 @@ public class CreditCardActivity extends ToplevelActivity {
                                 ErrorCause errorCause = CreditCardPaymentInstrument
                                         .validateCardHolder(cardHolder).getErrorCause();
                                 cardHolderEditText.setError(errorCause.getErrorMessage());
+                            }else{
+                                cardHolderEditText.setError(null);
                             }
                         }
                     }
@@ -113,6 +117,8 @@ public class CreditCardActivity extends ToplevelActivity {
                                 ErrorCause errorCause = CreditCardPaymentInstrument
                                         .validateExpiryMonth(expirationMonth).getErrorCause();
                                 expirationMonthEditText.setError(errorCause.getErrorMessage());
+                            }else{
+                                expirationMonthEditText.setError(null);
                             }
                         }
                     }
@@ -177,9 +183,10 @@ public class CreditCardActivity extends ToplevelActivity {
         showProgressDialog();
 
         final CreditCardPaymentInstrument paymentInstrument = getPaymentInstrument();
+        final String useCase = useCaseEditText.getText().toString();
 
         paylevenWrapper.addPaymentInstrument(
-                paymentInstrument, new AddPaymentInstrumentListener() {
+                paymentInstrument, useCase, new AddPaymentInstrumentListener() {
                     @Override
                     public void onPaymentInstrumentAddedSuccessfully(String userToken) {
                         dismissProgressDialog();

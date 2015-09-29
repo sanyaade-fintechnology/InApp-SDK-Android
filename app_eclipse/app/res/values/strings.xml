@@ -2,12 +2,12 @@
 <resources>
 
     <string name="app_name">InApp Sample</string>
-    <string name="action_sign_out">Sign out</string>
+    <string name="action_log_out">Log out</string>
 
     <!--used in login activity-->
     <string name="using_email">Using email: %s</string>
     <string name="email_hint">Email address</string>
-    <string name="login">Login</string>
+    <string name="login">Log in</string>
     <string name="error">Error</string>
     <string name="missing_email">Missing email</string>
     <string name="invalid_email">Invalid email format</string>
@@ -33,14 +33,16 @@
 
     <!--used in payment instruments view-->
     <string name="no_pi">No payment instrument</string>
-    <string name="pi_disabling_failed">Payment instrument disabling failed with %s</string>
+    <string name="pi_editing_failed">Payment instrument editing failed with %s</string>
     <string name="pi_removing_failed">Payment instrument removing failed with %s</string>
     <string name="pi_order">Payment instruments order set successfully</string>
     <string name="pi_order_failed">Payment instruments order set failed with %s</string>
     <string name="pi_remove_from">Remove from %s</string>
     <string name="pi_remove">Remove</string>
     <string name="pi_disable">Disable</string>
-
+    <string name="pi_enable">Enable</string>
+    <string name="blocked">Blocked</string>
+    <string name="pi_validate">Validate</string>
 
     <string name="processing">Processing</string>
 </resources>

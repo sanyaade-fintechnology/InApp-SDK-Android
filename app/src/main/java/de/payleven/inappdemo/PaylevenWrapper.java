@@ -2,16 +2,16 @@ package de.payleven.inappdemo;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.annotation.Nullable;
 
 import java.util.List;
 
 import de.payleven.inappsdk.PaylevenInAppClient;
 import de.payleven.inappsdk.PaymentInstrument;
+import de.payleven.inappsdk.PaymentInstrumentAction;
 import de.payleven.inappsdk.listeners.AddPaymentInstrumentListener;
-import de.payleven.inappsdk.listeners.DisablePaymentInstrumentListener;
+import de.payleven.inappsdk.listeners.EditPaymentInstrumentListener;
 import de.payleven.inappsdk.listeners.GetPaymentInstrumentsListener;
-import de.payleven.inappsdk.listeners.RemovePaymentInstrumentFromUseCaseListener;
+import de.payleven.inappsdk.listeners.RemovePaymentInstrumentListener;
 import de.payleven.inappsdk.listeners.SetPaymentInstrumentsOrderListener;
 
 /**
@@ -80,10 +80,12 @@ public class PaylevenWrapper {
      * Adds the payment instrument to the current user token, in the use case selected
      *
      * @param paymentInstrument the payment instrument that will be added to the user token
+     * @param useCase           the use case to which the payment instrument is added
      * @param listener          listener that reacts on the response of the Payleven InApp Client for adding
      *                          a payment instrument
      */
     public void addPaymentInstrument(final PaymentInstrument paymentInstrument,
+                                     final String useCase,
                                      AddPaymentInstrumentListener listener) {
 
         String userToken = getUserToken();
@@ -91,9 +93,11 @@ public class PaylevenWrapper {
             mPaylevenInAppClient.createUserTokenWithPaymentInstrument(
                     email,
                     paymentInstrument,
+                    useCase,
                     listener);
         } else {
-            mPaylevenInAppClient.addPaymentInstrument(userToken, paymentInstrument, listener);
+            mPaylevenInAppClient.addPaymentInstrument(userToken, paymentInstrument, useCase,
+                    listener);
         }
     }
 
@@ -109,29 +113,47 @@ public class PaylevenWrapper {
      *
      * @param listener listener that handles the result of the request
      */
-    public void getPaymentInstruments(GetPaymentInstrumentsListener listener) {
-        mPaylevenInAppClient.getPaymentInstrumentsList(getUserToken(), listener);
+    public void getPaymentInstruments(final String useCase,
+                                      GetPaymentInstrumentsListener listener) {
+        mPaylevenInAppClient.getPaymentInstrumentsList(getUserToken(), useCase, listener);
     }
 
     public void setPaymentInstrumentsOrder(final List<PaymentInstrument> paymentInstruments,
+                                           final String useCase,
                                            SetPaymentInstrumentsOrderListener listener) {
         mPaylevenInAppClient.setPaymentInstrumentsOrder(
                 getUserToken(),
+                useCase,
                 paymentInstruments,
                 listener);
     }
 
     /**
-     * Request the {@link de.payleven.inappsdk.PaylevenInAppClient} to disable a payment instrument
+     * Request the {@link de.payleven.inappsdk.PaylevenInAppClient} to edit a payment instrument
      * that is associated to the current user token
      * The result of this request is notified by the listener
      *
      * @param paymentInstrument payment instrument to be disabled
      * @param listener          listener that notifies about the result of the operation
      */
-    public void disablePaymentInstrument(final PaymentInstrument paymentInstrument,
-                                         DisablePaymentInstrumentListener listener) {
-        mPaylevenInAppClient.disablePaymentInstrument(getUserToken(), paymentInstrument, listener);
+    public void editPaymentInstrument(final PaymentInstrument paymentInstrument,
+                                      final PaymentInstrumentAction action,
+                                      final String cvv,
+                                      EditPaymentInstrumentListener listener) {
+        mPaylevenInAppClient.editPaymentInstrument(getUserToken(), paymentInstrument,
+                action, cvv, listener);
     }
 
+    /**
+     * Request the {@link de.payleven.inappsdk.PaylevenInAppClient} to edit a payment instrument
+     * that is associated to the current user token
+     * The result of this request is notified by the listener
+     *
+     * @param paymentInstrument payment instrument to be disabled
+     * @param listener          listener that notifies about the result of the operation
+     */
+    public void removePaymentInstrument(final PaymentInstrument paymentInstrument,
+                                        RemovePaymentInstrumentListener listener) {
+        mPaylevenInAppClient.removePaymentInstrument(getUserToken(), paymentInstrument, listener);
+    }
 }

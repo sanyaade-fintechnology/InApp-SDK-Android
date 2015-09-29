@@ -7,13 +7,20 @@
               android:orientation="vertical">
 
     <EditText
+        android:id="@+id/use_case_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/use_case"
+        android:inputType="text"
+        android:paddingTop="@dimen/activity_vertical_margin"/>
+
+    <EditText
         android:id="@+id/card_number_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/card_number_hint"
         android:inputType="number"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        />
+        android:paddingTop="@dimen/activity_vertical_margin"/>
 
     <EditText
         android:id="@+id/card_holder_edittext"

@@ -14,10 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.payleven.inappsdk.PaymentInstrument;
+import de.payleven.inappsdk.PaymentInstrumentAction;
 import de.payleven.inappsdk.errors.CallbackError;
-import de.payleven.inappsdk.listeners.DisablePaymentInstrumentListener;
+import de.payleven.inappsdk.listeners.EditPaymentInstrumentListener;
 import de.payleven.inappsdk.listeners.GetPaymentInstrumentsListener;
-import de.payleven.inappsdk.listeners.RemovePaymentInstrumentFromUseCaseListener;
+import de.payleven.inappsdk.listeners.RemovePaymentInstrumentListener;
 import de.payleven.inappsdk.listeners.SetPaymentInstrumentsOrderListener;
 
 /**
@@ -25,12 +26,14 @@ import de.payleven.inappsdk.listeners.SetPaymentInstrumentsOrderListener;
  * depending on the use case
  */
 public class PaymentInstrumentsActivity extends FragmentActivity implements
-        PaymentInstrumentsListAdapter.DisablePaymentInstrumentButtonListener,
+        PaymentInstrumentsListAdapter.EditPaymentInstrumentButtonListener,
+        PaymentInstrumentsListAdapter.RemovePaymentInstrumentButtonListener,
         PaymentInstrumentsListAdapter.SwitchPaymentInstrumentPositionsListener {
 
     private ListView paymentInstrumentsListView;
     private TextView emptyListTextView;
     private ProgressDialogFragment progressDialogFragment;
+    private EditText useCaseEditText;
 
     private PaymentInstrumentsListAdapter listAdapter;
 
@@ -51,6 +54,7 @@ public class PaymentInstrumentsActivity extends FragmentActivity implements
         paymentInstrumentsListView = (ListView) findViewById(R.id.payment_instruments);
         emptyListTextView = (TextView) findViewById(R.id.empty);
         paymentInstrumentsListView.setEmptyView(emptyListTextView);
+        useCaseEditText = (EditText) findViewById(R.id.use_case_edittext);
 
         final Button getPaymentInstruments = (Button) findViewById(R.id.get_PI_button);
         getPaymentInstruments.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +75,9 @@ public class PaymentInstrumentsActivity extends FragmentActivity implements
     private void getPaymentInstruments() {
         showProgressDialog();
 
-        paylevenAPI.getPaymentInstruments(new GetPaymentInstrumentsListener() {
+        String useCase = useCaseEditText.getText().toString();
+
+        paylevenAPI.getPaymentInstruments(useCase, new GetPaymentInstrumentsListener() {
             @Override
             public void onPaymentInstrumentsRetrieved(List<PaymentInstrument> paymentInstruments) {
                 dismissProgressDialog();
@@ -87,10 +93,10 @@ public class PaymentInstrumentsActivity extends FragmentActivity implements
                     listAdapter.notifyDataSetChanged();
                 }
                 String errorText;
-                if(throwable instanceof CallbackError){
-                    errorText = ((CallbackError)throwable).getErrorCode() 
+                if (throwable instanceof CallbackError) {
+                    errorText = ((CallbackError) throwable).getErrorCode()
                             + " " + throwable.getMessage();
-                }else{
+                } else {
                     errorText = throwable.getMessage();
                 }
                 emptyListTextView.setText(errorText);
@@ -102,6 +108,7 @@ public class PaymentInstrumentsActivity extends FragmentActivity implements
         listAdapter = new PaymentInstrumentsListAdapter(
                 PaymentInstrumentsActivity.this,
                 paymentInstruments,
+                PaymentInstrumentsActivity.this,
                 PaymentInstrumentsActivity.this,
                 PaymentInstrumentsActivity.this);
         paymentInstrumentsListView.setAdapter(listAdapter);
@@ -130,9 +137,10 @@ public class PaymentInstrumentsActivity extends FragmentActivity implements
             return;
 
         showProgressDialog();
+        String useCase = useCaseEditText.getText().toString();
 
         paylevenAPI.setPaymentInstrumentsOrder(
-                listAdapter.getObjects(),
+                listAdapter.getObjects(), useCase,
                 new SetPaymentInstrumentsOrderListener() {
                     @Override
                     public void onPaymentInstrumentsSetSuccessfully(
@@ -156,13 +164,16 @@ public class PaymentInstrumentsActivity extends FragmentActivity implements
     }
 
     @Override
-    public void disablePaymentInstrument(final PaymentInstrument paymentInstrument) {
+    public void editPaymentInstrument(final PaymentInstrument paymentInstrument,
+                                      final PaymentInstrumentAction action,
+                                      final String cvv) {
         showProgressDialog();
-        paylevenAPI.disablePaymentInstrument(
-                paymentInstrument,
-                new DisablePaymentInstrumentListener() {
+        paylevenAPI.editPaymentInstrument(
+                paymentInstrument, action, cvv,
+                new EditPaymentInstrumentListener() {
                     @Override
-                    public void onPaymentInstrumentDisabledSuccessfully() {
+                    public void onPaymentInstrumentEditedSuccessfully(
+                            List<PaymentInstrument> paymentInstruments) {
                         dismissProgressDialog();
                         // request again the list of payment instruments to make sure that the
                         // payment instrument was disabled
@@ -170,10 +181,35 @@ public class PaymentInstrumentsActivity extends FragmentActivity implements
                     }
 
                     @Override
-                    public void onPaymentInstrumentDisableFailed(Throwable throwable) {
+                    public void onPaymentInstrumentEditFailed(Throwable throwable) {
                         dismissProgressDialog();
                         Toast.makeText(PaymentInstrumentsActivity.this,
-                                getString(R.string.pi_disabling_failed,
+                                getString(R.string.pi_editing_failed,
+                                        throwable.getMessage()),
+                                Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    @Override
+    public void removePaymentInstrument(final PaymentInstrument paymentInstrument) {
+        showProgressDialog();
+        paylevenAPI.removePaymentInstrument(
+                paymentInstrument,
+                new RemovePaymentInstrumentListener() {
+                    @Override
+                    public void onPaymentInstrumentRemovedSuccessfully() {
+                        dismissProgressDialog();
+                        // request again the list of payment instruments to make sure that the
+                        // payment instrument was disabled
+                        getPaymentInstruments();
+                    }
+
+                    @Override
+                    public void onPaymentInstrumentRemoveFailed(Throwable throwable) {
+                        dismissProgressDialog();
+                        Toast.makeText(PaymentInstrumentsActivity.this,
+                                getString(R.string.pi_removing_failed,
                                         throwable.getMessage()),
                                 Toast.LENGTH_LONG).show();
                     }
@@ -189,4 +225,5 @@ public class PaymentInstrumentsActivity extends FragmentActivity implements
         paymentInstruments.set(from, paymentInstrumentTo);
         listAdapter.notifyDataSetChanged();
     }
+
 }

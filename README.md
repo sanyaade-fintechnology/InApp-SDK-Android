@@ -18,7 +18,7 @@ Include payleven repository to the list of build repositories:
  ```groovy
  repositories {
      maven{
-         url 'https://download.payleven.com/maven'
+         url 'https://download.payleven.de/maven'
      }
  }
  ```
@@ -29,7 +29,7 @@ Include payleven repository to the list of build repositories:
          ...
      <repository>
          <id>payleven-repo</id>
-         <url>https://download.payleven.com/maven</url>
+         <url>https://download.payleven.de/maven</url>
      </repository>
  </repositories>
  ```
@@ -72,22 +72,18 @@ When using `payleven InApp SDK` the GSON library is also required:
   
 ### Usage
 #### Permissions
-Add the following permissions to allow network communication:
+Add the following permission to allow network communication:
  ```xml
  <uses-permission android:name="android.permission.INTERNET" />
- <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   ```
     
 #### Services
-Add the following services:
+Add the following service:
  ```xml
  <service android:name="de.payleven.inappsdk.PaylevenCommunicationService"
      android:exported="false"
      android:process=":payleven"/>
-     
-<service android:name="de.payleven.inappsdk.PaymentInstrumentService"
-     android:exported="false"
-     android:process=":payleven"/>
+
   ```
 
 #### Code    
@@ -107,7 +103,7 @@ Use the unique API key to authenticate your app and get an instance of `Payleven
  ```
   
 ##### Add a payment instrument
-Create an instance of the `PaymentInstrument` class (a `CreditCardPaymentInstrument`, `DebitCardPaymentInstrument`, `SepaPaymentInstrument` or `PayPalPaymentInstrument`).
+Create an instance of the `PaymentInstrument` class (a `CreditCardPaymentInstrument`).
 If it's the first time you are trying to add a payment instrument for your user, you need to create a user token, based on the user's email address.
 
  ```java
@@ -131,6 +127,7 @@ If it's the first time you are trying to add a payment instrument for your user,
 ##### Get the payment instruments for a user token
 Use the user token to retrieve the payment instruments associated to it and to a specific use case.
 The list of payment instruments is sorted based on the order in which the payment instruments will be selected when making a payment.
+Note: Before offering your business services, call `getPaymentInstrumentsList` to make sure that the user has at least one valid (not expired) payment instrument.
 
  ```java
     public void getPaymentInstruments( final String userToken, final String useCase) {
@@ -173,17 +170,15 @@ To update the order in which the payment instruments will be used when making a 
  ```
  
 ##### Remove payment instrument for a use case
- Remove a payment instrument, belonging to a specific user token, from a use case. After this, the payment instrument cannot be used to make payments for that use case.
+ Remove a payment instrument, belonging to a specific user token. After this, the payment instrument cannot be used to make payments for the use case to which it belonged.
  
  ```java
 public void removePaymentInstrumentFromUseCase(
             final String userToken,
-            final PaymentInstrument paymentInstrument,
-            final String useCase) {
-        mPaylevenInappClient.removePaymentInstrumentFromUseCase(
+            final PaymentInstrument paymentInstrument) {
+        mPaylevenInappClient.removePaymentInstrument(
                 userToken,
                 paymentInstrument,
-                useCase,
                 new RemovePaymentInstrumentFromUseCaseListener() {
                     @Override
                     public void onPaymentInstrumentRemovedSuccessfully() {
@@ -197,20 +192,24 @@ public void removePaymentInstrumentFromUseCase(
     }
  ```
 
-##### Disable payment instrument
-Disable a payment instrument, belonging to a specific user token. The payment instrument will be removed from all use cases.
+##### Edit a payment instrument
+Edit a payment instrument, belonging to a specific user token. Possible actions are: enable, disable and validate. When the action is VALIDATE, the cvv is required.
  
  ```java
-    public void disablePaymentInstrument( final String userToken,
-                                         final PaymentInstrument paymentInstrument) {
-        mPaylevenInappClient.disablePaymentInstrument(getUserToken(), paymentInstrument, 
-         new DisablePaymentInstrumentListener() {
+    public void editPaymentInstrument( final PaymentInstrument paymentInstrument,
+                                       final PaymentInstrumentAction action,
+                                       final String cvv,
+                                      EditPaymentInstrumentListener listener) {
+       mPaylevenInAppClient.editPaymentInstrument(getUserToken(), paymentInstrument,
+                       action, cvv,
+         new EditPaymentInstrumentListener() {
                     @Override
-                    public void onPaymentInstrumentDisabledSuccessfully() {
+                    public void onPaymentInstrumentEditedSuccessfully(
+                    List<PaymentInstrument> paymentInstruments) {
                         
                     }
                     @Override
-                    public void onPaymentInstrumentDisableFailed(Throwable throwable) {
+                    public void onPaymentInstrumentEditFailed(Throwable throwable) {
                         // handle disable payment instrument failed
                     }
                 }););
