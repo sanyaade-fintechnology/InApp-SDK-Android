@@ -18,12 +18,7 @@ import de.payleven.inappsdk.PaylevenInAppClient;
  */
 public class LoginActivity extends ToplevelActivity {
 
-    private static final String REGEX_PATTERN =
-            "^((\"[\\w-\\s]+\")|([\\w-]+[\\w+-]*(?:\\.[\\w-]+)*)|(\"[\\w-\\s]+\")([\\w-]+"
-                    + "(?:\\.[\\w-]+)*))(@((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}"
-                    + "(?:\\.[a-z]{2})?)$)|(@\\[?((25[0-5]\\.|2[0-4][0-9]\\.|1[0-9]{2}\\."
-                    + "|[0-9]{1,2}\\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\\.){2}"
-                    + "(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\\]?$)";
+    private static final String REGEX_PATTERN = "^[A-Z0-9._%+-]+@[A-Z0-9-]+\\.[A-Z]{2,6}$";
 
     private EditText emailEditText;
     
