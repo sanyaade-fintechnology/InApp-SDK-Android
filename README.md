@@ -1,6 +1,6 @@
 [![Platform](https://img.shields.io/badge/Platform-Android-brightgreen.svg?style=flat-square)]()
 [![API](https://img.shields.io/badge/API-14%2B-orange.svg?style=flat-square)]()
-[![Version](https://img.shields.io/badge/version-1.0.0-brightgreen.svg?style=flat-square)]()
+[![Version](https://img.shields.io/badge/version-1.1.0-brightgreen.svg?style=flat-square)]()
 [![Berlin](https://img.shields.io/badge/Made%20in-Berlin-red.svg?style=flat-square)]()
 
 # payleven InApp SDK
@@ -39,7 +39,7 @@ Include payleven repository to the list of build repositories:
 ###### Gradle
  ```groovy
  //Use the specific library version here
- compile 'de.payleven.payment:inapp:1.0.0@jar'
+ compile 'de.payleven.payment:inapp:1.1.0@jar'
  ```
   
 ###### Maven
@@ -47,7 +47,7 @@ Include payleven repository to the list of build repositories:
  <dependency>
    <groupId>de.payleven.payment</groupId>
    <artifactId>inapp</artifactId>
-   <version>1.0.0</version>
+   <version>1.1.0</version>
    <type>jar</type>
  </dependency>
  ```
