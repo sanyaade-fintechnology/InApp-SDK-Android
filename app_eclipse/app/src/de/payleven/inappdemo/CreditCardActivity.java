@@ -3,14 +3,18 @@ package de.payleven.inappdemo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.regex.Pattern;
+
 import de.payleven.inappsdk.CreditCardPaymentInstrument;
 import de.payleven.inappsdk.errors.CallbackError;
+import de.payleven.inappsdk.errors.InvalidUseCaseError;
 import de.payleven.inappsdk.errors.ValidationError;
 import de.payleven.inappsdk.errors.causes.ErrorCause;
 import de.payleven.inappsdk.errors.causes.InvalidCVV;
@@ -25,6 +29,8 @@ import de.payleven.inappsdk.listeners.AddPaymentInstrumentListener;
  * Activity used to add a credit card payment instrument to the logged in user
  */
 public class CreditCardActivity extends ToplevelActivity {
+
+    private static final String REGEX_PATTERN = "[-a-zA-Z0-9._+]*";
 
     private EditText useCaseEditText;
     private EditText cardNumberEditText;
@@ -67,6 +73,23 @@ public class CreditCardActivity extends ToplevelActivity {
     }
 
     private void setFocusListeners() {
+        useCaseEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    final String useCase = useCaseEditText.getText().toString();
+
+                    if (!TextUtils.isEmpty(useCase)) {
+                        final Pattern pattern =
+                                Pattern.compile(REGEX_PATTERN, Pattern.CASE_INSENSITIVE);
+                        if (!pattern.matcher(useCase).matches()) {
+                            useCaseEditText.setError("Invalid use case format");
+                        }
+                    }
+                }
+            }
+        });
+
         cardNumberEditText.setOnFocusChangeListener(
                 new View.OnFocusChangeListener() {
                     @Override
@@ -206,6 +229,9 @@ public class CreditCardActivity extends ToplevelActivity {
                                 errorTextView.setText(error);
                                 validateFields((ValidationError) throwable);
                             } else {
+                                if (throwable instanceof InvalidUseCaseError) {
+                                    useCaseEditText.setError(throwable.getMessage());
+                                }
                                 errorTextView.setText(
                                         throwable.toString() + " " + ((CallbackError) throwable)
                                                 .getErrorCode());
