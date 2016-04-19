@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/badge/version-1.1.0-brightgreen.svg?style=flat-square)]()
 [![Berlin](https://img.shields.io/badge/Made%20in-Berlin-red.svg?style=flat-square)]()
 
-# payleven App Pay SDK for Android
+# payleven App Pay SDK
 
 This project provides an SDK for Android. It allows use case categorisation, prioritisation and tokenization of payment instruments, which are retrieved using the user token created. Learn more about App Pay [here](https://current-developer.payleven.com/docs/In-App/index.html).
 
