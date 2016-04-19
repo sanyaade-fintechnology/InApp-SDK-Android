@@ -3,12 +3,13 @@
 [![Version](https://img.shields.io/badge/version-1.1.0-brightgreen.svg?style=flat-square)]()
 [![Berlin](https://img.shields.io/badge/Made%20in-Berlin-red.svg?style=flat-square)]()
 
-# payleven InApp SDK
+# payleven App Pay SDK for Android
 
-This project provides an SDK for Android. It allows use case categorisation, prioritisation and tokenization of payment instruments, which are retrieved using the user token created. Learn more about the InApp API on the [payleven developer website](https://developer.payleven.com/docs/In-App/index.html#/overview).
+This project provides an SDK for Android. It allows use case categorisation, prioritisation and tokenization of payment instruments, which are retrieved using the user token created. Learn more about App Pay [here](https://current-developer.payleven.com/docs/In-App/index.html).
 
 ### Prerequisites
-In order to receive an API key, please contact us by sending an email to integration@payleven.com
+* You or your client is operating in one of the countries supported by payleven.
+* You have signed up and received your API key [here](https://service.payleven.com/uk/developer?product=apppay).
 
 ### Installation
 ##### Repository
