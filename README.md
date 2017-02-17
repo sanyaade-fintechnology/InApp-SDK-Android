@@ -1,3 +1,9 @@
+### NOTE: 
+### Payleven and SumUp are now one company. The payleven SDKs are no longer supported. Please see [SumUp's developer products](http://docs.sumup.com/).
+
+---
+---
+
 [![Platform](https://img.shields.io/badge/Platform-Android-brightgreen.svg?style=flat-square)]()
 [![API](https://img.shields.io/badge/API-14%2B-orange.svg?style=flat-square)]()
 [![Version](https://img.shields.io/badge/version-1.1.0-brightgreen.svg?style=flat-square)]()
